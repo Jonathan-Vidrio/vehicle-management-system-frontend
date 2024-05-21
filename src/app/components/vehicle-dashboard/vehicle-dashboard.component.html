@@ -1,0 +1,339 @@
+<main class="bg-gray-900">
+  <div class="container mx-auto h-auto flex-wrap max-w-screen-xl p-4">
+    <!-- Vehicle Usage -->
+    <div class="mx-auto p-4 flex justify-between items-center">
+      <!-- Title -->
+      <h1 class="text-3xl font-semibold text-gray-100">Vehicle Usage</h1>
+
+      <div class="relative">
+        <!-- Filter -->
+        <button
+          (click)="toggleDropdownVehicleUsage()"
+          class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        >
+          <svg
+            class="w-3 h-3 text-gray-500 dark:text-gray-400 me-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
+            />
+          </svg>
+          {{ selectedValueVehicleUsage }}
+          <svg
+            class="w-2.5 h-2.5 ms-2.5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 4 4 4-4"
+            />
+          </svg>
+        </button>
+
+        <!-- Dropdown -->
+        <div
+          *ngIf="dropdownOpenVehicleUsage"
+          [ngClass]="{ hidden: !dropdownOpenVehicleUsage }"
+          class="absolute z-50 hidden w-full bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+        >
+          <ul
+            class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdownRadioButton"
+          >
+            <li>
+              <div
+                (click)="selectValueVehicleUsage('2024')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2024</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                (click)="selectValueVehicleUsage('2023')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2023</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                (click)="selectValueVehicleUsage('2022')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2022</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                (click)="selectValueVehicleUsage('2021')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2021</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                (click)="selectValueVehicleUsage('2020')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2020</label
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg h-auto">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+      >
+        <colgroup>
+          <col style="width: 25%" />
+          <col style="width: 25%" />
+          <col style="width: 25%" />
+          <col style="width: 25%" />
+        </colgroup>
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-6 py-3">Vehicle Plates</th>
+            <th scope="col" class="px-6 py-3">Brand</th>
+            <th scope="col" class="px-6 py-3">Model</th>
+            <th scope="col" class="px-6 py-3">Total Usage Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="vehicles$ | async as vehicles">
+            <tr
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              *ngFor="
+                let vehicle of vehicles
+                  | paginate
+                    : {
+                        itemsPerPage: 15,
+                        currentPage: currentPageVehicleUsage,
+                        id: 'data'
+                      }
+              "
+            >
+              <th
+                scope="row"
+                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {{ vehicle.VehiclePlates }}
+              </th>
+              <td class="px-6 py-4">{{ vehicle.Brand }}</td>
+              <td class="px-6 py-4">{{ vehicle.Model }}</td>
+              <td class="px-6 py-4">{{ vehicle.UsageHours }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="p-4 flex justify-center items-center text-amber-50">
+      <pagination-controls
+        (pageChange)="setCurrentPageVehicleUsage($event)"
+        id="data"
+        previousLabel="Previous"
+        nextLabel="Next"
+      ></pagination-controls>
+    </div>
+
+    <!-- Fuel Consumption -->
+    <div class="mx-auto p-4 flex justify-between items-center">
+      <!-- Title -->
+      <h1 class="text-3xl font-semibold text-gray-100">Fuel Consumption</h1>
+
+      <div class="relative">
+        <!-- Filter -->
+        <button
+          (click)="toggleDropdownFuelConsumption()"
+          class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        >
+          <svg
+            class="w-3 h-3 text-gray-500 dark:text-gray-400 me-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
+            />
+          </svg>
+          {{ selectedValueFuelConsumption }}
+          <svg
+            class="w-2.5 h-2.5 ms-2.5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 4 4 4-4"
+            />
+          </svg>
+        </button>
+
+        <!-- Dropdown -->
+        <div
+          *ngIf="dropdownOpenFuelConsumption"
+          [ngClass]="{ hidden: !dropdownOpenFuelConsumption }"
+          class="absolute z-50 hidden w-full bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+        >
+          <ul
+            class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdownRadioButton"
+          >
+            <li>
+              <div
+                (click)="selectValueFuelConsumption('2024')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2024</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                (click)="selectValueFuelConsumption('2023')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2023</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                (click)="selectValueFuelConsumption('2022')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2022</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                (click)="selectValueFuelConsumption('2021')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2021</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                (click)="selectValueFuelConsumption('2020')"
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >2020</label
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg h-auto">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+      >
+        <colgroup>
+          <col style="width: 25%" />
+          <col style="width: 25%" />
+          <col style="width: 25%" />
+          <col style="width: 25%" />
+        </colgroup>
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-6 py-3">Vehicle Plates</th>
+            <th scope="col" class="px-6 py-3">Brand</th>
+            <th scope="col" class="px-6 py-3">Model</th>
+            <th scope="col" class="px-6 py-3">Total Liters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="fuelConsumption$ | async as vehicles">
+            <tr
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              *ngFor="
+                let vehicle of vehicles
+                  | paginate
+                    : {
+                        itemsPerPage: 15,
+                        currentPage: currentPageFuelConsumption,
+                        id: 'dataFuelConsumption'
+                      }
+              "
+            >
+              <th
+                scope="row"
+                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {{ vehicle.VehiclePlates }}
+              </th>
+              <td class="px-6 py-4">{{ vehicle.Brand }}</td>
+              <td class="px-6 py-4">{{ vehicle.Model }}</td>
+              <td class="px-6 py-4">{{ vehicle.TotalLiters }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="p-4 flex justify-center items-center text-amber-50">
+      <pagination-controls
+        (pageChange)="setCurrentPageFuelConsumption($event)"
+        id="dataFuelConsumption"
+        previousLabel="Previous"
+        nextLabel="Next"
+      ></pagination-controls>
+    </div>
+  </div>
+</main>
