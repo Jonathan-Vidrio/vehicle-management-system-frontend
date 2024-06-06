@@ -1,0 +1,264 @@
+<main class="bg-gray-900">
+  <div class="container mx-auto h-auto flex-wrap max-w-screen-xl p-4">
+    <div class="mx-auto p-4">
+      <h1 class="text-3xl font-semibold text-gray-100">Dashboard</h1>
+    </div>
+    <div class="flex flex-wrap justify-between">
+      <app-scorecard
+        *ngIf="totalMaintenancesByYear$ | async as totalMaintenances"
+        [title]="totalMaintenances[0].title"
+        [label]="totalMaintenances[0].label"
+        [value]="totalMaintenances[0].value"
+        [date]="totalMaintenances[0].date"
+      >
+      </app-scorecard>
+
+      <app-scorecard
+        *ngIf="totalMaintenancesByMonth$ | async as totalMaintenances"
+        [title]="totalMaintenances[0].title"
+        [label]="totalMaintenances[0].label"
+        [value]="totalMaintenances[0].value"
+        [date]="totalMaintenances[0].date"
+      >
+      </app-scorecard>
+
+      <app-scorecard
+        *ngIf="
+          vehicleWithMostMaintenances$ | async as vehicleWithMostMaintenances
+        "
+        [title]="vehicleWithMostMaintenances[0].title"
+        [label]="vehicleWithMostMaintenances[0].label"
+        [value]="vehicleWithMostMaintenances[0].value"
+        [date]="vehicleWithMostMaintenances[0].date"
+      >
+      </app-scorecard>
+
+      <div class="flex flex-wrap w-full justify-between mt-5">
+        <!-- Vehicle Maintenance by Vehicle Type -->
+        <ng-container
+          *ngIf="{
+            '2020': vehicleMaintenanceByVehicleType2020$ | async,
+            '2021': vehicleMaintenanceByVehicleType2021$ | async,
+            '2022': vehicleMaintenanceByVehicleType2022$ | async,
+            '2023': vehicleMaintenanceByVehicleType2023$ | async,
+            '2024': vehicleMaintenanceByVehicleType2024$ | async,
+          } as data"
+        >
+          <ng-container
+            *ngIf="
+              data['2020'] &&
+              data['2021'] &&
+              data['2022'] &&
+              data['2023'] &&
+              data['2024']
+            "
+          >
+            <app-chart
+              [chartId]="'chart-vehicle-maintenance-by-vehicle-type'"
+              [title]="'Vehicle Maintenance by Vehicle Type'"
+              [type]="'bar'"
+              [data2020]="data['2020'] ?? []"
+              [data2021]="data['2021'] ?? []"
+              [data2022]="data['2022'] ?? []"
+              [data2023]="data['2023'] ?? []"
+              [data2024]="data['2024'] ?? []"
+            >
+            </app-chart>
+          </ng-container>
+        </ng-container>
+
+        <!-- Vehicle Usage by Month -->
+        <ng-container
+          *ngIf="{
+            '2020': vehicleUsageByMonth2020$ | async,
+            '2021': vehicleUsageByMonth2021$ | async,
+            '2022': vehicleUsageByMonth2022$ | async,
+            '2023': vehicleUsageByMonth2023$ | async,
+            '2024': vehicleUsageByMonth2024$ | async,
+          } as data"
+        >
+          <ng-container
+            *ngIf="
+              data['2020'] &&
+              data['2021'] &&
+              data['2022'] &&
+              data['2023'] &&
+              data['2024']
+            "
+          >
+            <app-chart
+              [chartId]="'chart-vehicle-usage-by-month'"
+              [title]="'Vehicle Usage by Month'"
+              [type]="'bar'"
+              [data2020]="data['2020'] ?? []"
+              [data2021]="data['2021'] ?? []"
+              [data2022]="data['2022'] ?? []"
+              [data2023]="data['2023'] ?? []"
+              [data2024]="data['2024'] ?? []"
+            >
+            </app-chart>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="flex flex-wrap w-full justify-between">
+        <!-- Vehicle Usage by Vehicle Type -->
+        <ng-container
+          *ngIf="{
+            '2020': vehicleUsageByVehicleType2020$ | async,
+            '2021': vehicleUsageByVehicleType2021$ | async,
+            '2022': vehicleUsageByVehicleType2022$ | async,
+            '2023': vehicleUsageByVehicleType2023$ | async,
+            '2024': vehicleUsageByVehicleType2024$ | async,
+          } as data"
+        >
+          <ng-container
+            *ngIf="
+              data['2020'] &&
+              data['2021'] &&
+              data['2022'] &&
+              data['2023'] &&
+              data['2024']
+            "
+          >
+            <app-chart
+              [chartId]="'chart-vehicle-usage-by-vehicle-type'"
+              [title]="'Vehicle Usage by Vehicle Type'"
+              [type]="'bar'"
+              [data2020]="data['2020'] ?? []"
+              [data2021]="data['2021'] ?? []"
+              [data2022]="data['2022'] ?? []"
+              [data2023]="data['2023'] ?? []"
+              [data2024]="data['2024'] ?? []"
+            >
+            </app-chart>
+          </ng-container>
+        </ng-container>
+
+        <!-- Vehicle Maintenance by Month -->
+        <ng-container
+          *ngIf="{
+            '2020': vehicleMaintenanceByMonth2020$ | async,
+            '2021': vehicleMaintenanceByMonth2021$ | async,
+            '2022': vehicleMaintenanceByMonth2022$ | async,
+            '2023': vehicleMaintenanceByMonth2023$ | async,
+            '2024': vehicleMaintenanceByMonth2024$ | async,
+          } as data"
+        >
+          <ng-container
+            *ngIf="
+              data['2020'] &&
+              data['2021'] &&
+              data['2022'] &&
+              data['2023'] &&
+              data['2024']
+            "
+          >
+            <app-chart
+              [chartId]="'chart-vehicle-maintenance-by-month'"
+              [title]="'Vehicle Maintenance by Month'"
+              [type]="'bar'"
+              [data2020]="data['2020'] ?? []"
+              [data2021]="data['2021'] ?? []"
+              [data2022]="data['2022'] ?? []"
+              [data2023]="data['2023'] ?? []"
+              [data2024]="data['2024'] ?? []"
+            >
+            </app-chart>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Tables -->
+    <div class="flex w-full justify-between">
+      <!-- Vehicles with Most Maintenance 2024 -->
+      <div class="p-4 w-1/2">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          Vehicles with Most Maintenance 2024
+        </h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg h-auto">
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">No.</th>
+                <th scope="col" class="px-6 py-3">Vehicle Plates</th>
+                <th scope="col" class="px-6 py-3">Total Maintenances</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                *ngIf="vehiclesWithMostMaintenance2024$ | async as maintenances"
+              >
+                <tr
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  *ngFor="let maintenance of maintenances; let i = index"
+                >
+                  <td
+                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {{ i + 1 }}
+                  </td>
+                  <th
+                    scope="row"
+                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {{ maintenance.label }}
+                  </th>
+                  <td class="px-6 py-4">{{ maintenance.value }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vehicles with Most Usage 2024 -->
+      <div class="p-4 w-1/2">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          Vehicles with Most Usage 2024
+        </h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg h-auto">
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">No.</th>
+                <th scope="col" class="px-6 py-3">Vehicle Plates</th>
+                <th scope="col" class="px-6 py-3">Total Hours Usages</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="vehicleWithMostUsage2024$ | async as usages">
+                <tr
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  *ngFor="let usage of usages; let i = index"
+                >
+                  <td
+                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {{ i + 1 }}
+                  </td>
+                  <th
+                    scope="row"
+                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {{ usage.label }}
+                  </th>
+                  <td class="px-6 py-4">{{ usage.value }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

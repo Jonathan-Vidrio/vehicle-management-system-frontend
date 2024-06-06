@@ -1,0 +1,127 @@
+<main class="bg-gray-900">
+  <div class="container mx-auto h-auto flex-wrap max-w-screen-xl p-4">
+    <div class="mx-auto flex p-4 justify-between">
+      <h1 class="text-3xl font-semibold text-gray-100">OLAP</h1>
+      <select
+        [(ngModel)]="selectedYear"
+        (change)="onYearChange($event)"
+        class="px-4 w-[250px] py-2 rounded text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-800 dark:bg-gray-700 hover:bg-gray-600 active:bg-gray-700"
+      >
+        <option *ngFor="let year of years" [value]="year">
+          {{ year }}
+        </option>
+      </select>
+    </div>
+
+    <!-- div para mostrar tres pestañas -->
+    <div class="flex justify-center items-center">
+      <div class="flex justify-between w-1/4">
+        <button
+          class="px-4 rounded w-[100px] h-[40px] py-2 text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-800 dark:bg-gray-700 hover:bg-gray-600 active:bg-gray-700"
+          (click)="onFaceChange(1)"
+        >
+          <a>Face 1</a>
+        </button>
+        <button
+          class="px-4 rounded w-[100px] h-[40px] py-2 text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-800 dark:bg-gray-700 hover:bg-gray-600 active:bg-gray-700"
+          (click)="onFaceChange(2)"
+        >
+          <a>Face 2</a>
+        </button>
+        <button
+          class="px-4 rounded w-[100px] h-[40px] py-2 text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-800 dark:bg-gray-700 hover:bg-gray-600 active:bg-gray-700"
+          (click)="onFaceChange(3)"
+        >
+          <a>Face 3</a>
+        </button>
+      </div>
+    </div>
+    <!-- Horizontal line -->
+    <hr class="border-gray-500 mt-4" />
+
+    <!-- Tables -->
+    <div class="p-4">
+      <div class="flex justify-between mb-4">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          {{ title }}
+        </h2>
+        <!-- Select para Face 1 -->
+        <select
+          *ngIf="selectedFace === 1"
+          [(ngModel)]="selectedDepartment"
+          (change)="onOptionChange($event)"
+          class="px-4 w-[250px] py-2 rounded text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-800 dark:bg-gray-700 hover:bg-gray-600 active:bg-gray-700"
+        >
+          <ng-container *ngIf="departments">
+            <option
+              *ngFor="let option of departments"
+              [value]="option.DepartmentID"
+            >
+              {{ option.Name }}
+            </option>
+          </ng-container>
+        </select>
+
+        <!-- Select para Face 2 -->
+        <select
+          *ngIf="selectedFace === 2"
+          [(ngModel)]="selectedVehiclePlate"
+          (change)="onOptionChange($event)"
+          class="px-4 w-[250px] py-2 rounded text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-800 dark:bg-gray-700 hover:bg-gray-600 active:bg-gray-700"
+        >
+          <ng-container *ngIf="vehicles">
+            <option
+              *ngFor="let option of vehicles"
+              [value]="option.VehiclePlates"
+            >
+              {{ option.VehiclePlates }}
+            </option>
+          </ng-container>
+        </select>
+
+        <!-- Select para Face 3 -->
+        <select
+          *ngIf="selectedFace === 3"
+          [(ngModel)]="selectedDepartment"
+          (change)="onOptionChange($event)"
+          class="px-4 w-[250px] py-2 rounded text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-800 dark:bg-gray-700 hover:bg-gray-600 active:bg-gray-700"
+        >
+          <ng-container *ngIf="departments">
+            <option
+              *ngFor="let option of departments"
+              [value]="option.DepartmentID"
+            >
+              {{ option.Name }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+
+      <ng-container *ngIf="data$ | async as data">
+        <app-table
+          [title]="title"
+          [headers]="headers"
+          [data]="data"
+          *ngIf="selectedFace === 1"
+        >
+        </app-table>
+
+        <app-table
+          [title]="title"
+          [headers]="headers"
+          [data]="data"
+          *ngIf="selectedFace === 2"
+        >
+        </app-table>
+
+        <app-table
+          [title]="title"
+          [headers]="headers"
+          [data]="data"
+          *ngIf="selectedFace === 3"
+        >
+        </app-table>
+      </ng-container>
+    </div>
+  </div>
+</main>

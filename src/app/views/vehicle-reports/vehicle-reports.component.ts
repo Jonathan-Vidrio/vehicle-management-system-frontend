@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterLink } from '@angular/router';
@@ -7,20 +6,12 @@ import { Observable, of } from 'rxjs';
 import { GeneralService } from '../../services/general.service';
 
 @Component({
-  selector: 'app-vehicle-dashboard',
+  selector: 'app-vehicle-reports',
   standalone: true,
-  imports: [
-    NgApexchartsModule,
-    AsyncPipe,
-    NgForOf,
-    NgIf,
-    NgxPaginationModule,
-    RouterLink,
-    NgClass,
-  ],
-  templateUrl: './vehicle-dashboard.component.html',
+  imports: [AsyncPipe, NgForOf, NgIf, NgxPaginationModule, RouterLink, NgClass],
+  templateUrl: './vehicle-reports.component.html',
 })
-export class VehicleDashboardComponent implements OnInit {
+export class VehicleReportsComponent implements OnInit {
   vehicles$: Observable<any> = of([]);
   dropdownOpenVehicleUsage = false;
   selectedValueVehicleUsage = '2024';

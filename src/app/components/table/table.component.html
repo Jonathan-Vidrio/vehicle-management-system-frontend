@@ -1,0 +1,48 @@
+<div class="w-full">
+  <div class="relative overflow-x-auto sm:rounded-lg h-auto">
+    <table
+      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    >
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      >
+        <tr>
+          <ng-container *ngIf="headers">
+            <th
+              class="px-4 py-3 font-medium text-gray-900 dark:text-white"
+              *ngFor="let header of headers"
+            >
+              {{ header }}
+            </th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="data">
+          <tr
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            *ngFor="
+              let row of data
+                | paginate
+                  : { itemsPerPage: itemsPerPage, currentPage: currentPage };
+              let i = index
+            "
+          >
+            <td
+              class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              *ngFor="let key of keys"
+            >
+              {{ row[key] }}
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <div class="p-4 flex justify-center items-center text-amber-50">
+      <pagination-controls
+        (pageChange)="currentPage = $event"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

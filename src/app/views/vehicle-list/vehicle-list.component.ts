@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Vehicle } from '../../../interfaces/vehicle';
+import { Vehicle } from '../../../interfaces/vehicle.interface';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { GeneralService } from '../../services/general.service';

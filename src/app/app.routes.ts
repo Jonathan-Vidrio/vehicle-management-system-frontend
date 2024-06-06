@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
-import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
-import { VehicleAddComponent } from './components/vehicle-add/vehicle-add.component';
-import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details.component';
-import { VehicleUpdateComponent } from './components/vehicle-update/vehicle-update.component';
-import { VehicleDashboardComponent } from './components/vehicle-dashboard/vehicle-dashboard.component';
+import { VehicleListComponent } from './views/vehicle-list/vehicle-list.component';
+import { VehicleAddComponent } from './views/vehicle-add/vehicle-add.component';
+import { VehicleDetailsComponent } from './views/vehicle-details/vehicle-details.component';
+import { VehicleUpdateComponent } from './views/vehicle-update/vehicle-update.component';
+import { VehicleReportsComponent } from './views/vehicle-reports/vehicle-reports.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { OlapComponent } from './views/olap/olap.component';
 
 export const routes: Routes = [
   {
@@ -31,8 +33,16 @@ export const routes: Routes = [
         component: VehicleUpdateComponent,
       },
       {
+        path: 'reports',
+        component: VehicleReportsComponent,
+      },
+      {
+        path: 'olap',
+        component: OlapComponent,
+      },
+      {
         path: 'dashboard',
-        component: VehicleDashboardComponent,
+        component: DashboardComponent,
       },
     ],
   },
